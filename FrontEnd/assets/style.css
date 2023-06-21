@@ -351,6 +351,11 @@ footer nav ul {
 	flex-direction: column;
 }
 
+.error {
+ color: brown;
+ font-size: 20px;
+}
+
 #login input {
 	height: 50px;
 	font-size: 1.2em;

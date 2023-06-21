@@ -7,6 +7,7 @@ const getWorks = async () => {
 }
 
 
+
 //Affiche les travaux
 const displayWorks = (list, category) => {  
     const portfolio =  document.getElementById("portfolio");
