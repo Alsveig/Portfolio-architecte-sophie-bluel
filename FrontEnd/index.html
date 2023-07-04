@@ -1,65 +1,128 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
 	<meta charset="UTF-8">
 	<title>Sophie Bluel - Architecte d'intérieur</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
+		rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<script src="https://kit.fontawesome.com/dbf3fc7a04.js" crossorigin="anonymous"></script>
 	<script src="../Backend/myScript.js" defer></script>
 </head>
-<body>
-<header>
-	<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
-	<nav>
-		<ul>
-			<li>projets</li>
-			<li>contact</li>
-			<li><a href="login.html">login</a></li>
-			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
-		</ul>
-	</nav>
-</header>
-<main>
-	<section id="introduction">
-		<figure>
-			<img src="./assets/images/sophie-bluel.png" alt="">
-		</figure>
-		<article>
-			<h2>Designer d'espace</h2>
-			<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
-			<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
-			<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
-		</article>
-	</section>
-	<section id="portfolio">
-		<h2>Mes Projets</h2>
-		
-	</section>
-	<section id="contact">
-		<h2>Contact</h2>
-		<p>Vous avez un projet ? Discutons-en !</p>
-		<form action="#" method="get">
-			<label for="name">Nom</label>
-			<input type="text" name="name" id="name">
-			<label for="email">Email</label>
-			<input type="email" name="email" id="email">
-			<label for="message">Message</label>
-			<textarea name="message" id="message" cols="30" rows="10"></textarea>
-			<input type="submit" value="Envoyer">
-		</form>
-	</section>
-</main>
 
-<footer>
-	<nav>
-		<ul>
-			<li>Mentions Légales</li>
-		</ul>
-	</nav>
-</footer>
+<body>
+	<div>
+		<header>
+			<div id="black_bar">
+				<i class="fa-regular fa -pen-to-square"></i>
+				<p>Mode édition</p>
+				<button>publier les changements</button>
+			</div>
+			<div class="header">
+				<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+				<nav>
+					<ul>
+						<li>projets</li>
+						<li>contact</li>
+						<li><a href="login.html">login</a></li>
+						<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+
+		<main>
+			<section id="introduction">
+				<figure id="figure_intro">
+					<img src="./assets/images/sophie-bluel.png" alt="">
+				</figure>
+				<article id="prez">
+					<h2 id="before-mod">Designer d'espace</h2>
+					<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la
+						livraison
+						finale du chantier.</p>
+					<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les
+						couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du
+						chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
+					<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG,
+						décorateur(trice).</p>
+				</article>
+			</section>
+
+			<section id="portfolio">
+				<!--<h2>Mes Projets</h2>-->
+			</section>
+
+			<!-- Modal -->
+			<aside id="modal1" class="modale" aria-hidden="true" role="dialog" aria-modal="false"
+				aria_labelledby="#title">
+				<!-- Modal content -->
+				<div class="modal-wrapper">
+					<h1 id="title">Galerie photo</h1>
+					<span id="close" class="close"><i class="fa-solid fa-x"></i></span>
+					<div id="listing">
+					</div>
+					<hr>
+					<button id="add_button">Ajouter une photo</button>
+					<p id="delete-gallery">Supprimer la galerie</p>
+				</div>
+			</aside>
+
+			<aside id="modal2" class="modale2" aria-hidden="true" role="dialog" aria-modal="false"
+				aria_labelledby="#title">
+				<!-- Modal content -->
+				<div class="modal-wrapper">
+					<h1 id="title2">Ajout photo</h1>
+					<span id="return-arrow"><i class="fa-solid fa-arrow-left"></i></span>
+					<span id="close2" class="close"><i class="fa-solid fa-x"></i></span>
+					<form id ="new-work_form" method="post" action="../Backend/myScript.js" enctype="multipart/form-data">
+						<div class="add-field">
+							<span><i class="fa-regular fa-image"></i></span>
+							<div class="add-form_container">
+								<button id="add-pic">+ Ajout photo</button>
+								<input type="file" id="img" name="image" accept="image/*">
+							</div>
+							<p>jpg, png : 4mo max</p>
+						</div>
+						<label for="titre">Titre</label>
+						<input type="textarea" name="title" id="titre">
+						<label for="category">Catégorie</label>
+						<select name="category" id="category">
+						</select>
+						<hr>
+						<button id="valid" type="submit">Valider</button>
+					</form>
+				</div>
+			</aside>
+
+			<section id="contact">
+				<h2>Contact</h2>
+				<p>Vous avez un projet ? Discutons-en !</p>
+				<form action="#" method="get">
+					<label for="name">Nom</label>
+					<input type="text" name="name" id="name">
+					<label for="email">Email</label>
+					<input type="email" name="email" id="email">
+					<label for="message">Message</label>
+					<textarea name="message" id="message" cols="30" rows="10"></textarea>
+					<input type="submit" value="Envoyer">
+				</form>
+			</section>
+		</main>
+
+		<footer>
+			<nav>
+				<ul>
+					<li>Mentions Légales</li>
+				</ul>
+			</nav>
+		</footer>
+	</div>
 </body>
+
 </html>
