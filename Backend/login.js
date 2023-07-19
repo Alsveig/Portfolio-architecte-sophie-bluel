@@ -35,7 +35,6 @@ async function LogIn(event) {
         body: JSON.stringify(user),
     });
     const jsonResult = await fetchResult.json();
-    console.log(jsonResult);
 
     if (jsonResult.userId) {
         localStorage.setItem("token", jsonResult.token);

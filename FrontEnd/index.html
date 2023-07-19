@@ -80,14 +80,15 @@
 					<h1 id="title2">Ajout photo</h1>
 					<span id="return-arrow"><i class="fa-solid fa-arrow-left"></i></span>
 					<span id="close2" class="close"><i class="fa-solid fa-x"></i></span>
-					<form id ="new-work_form" method="post" action="../Backend/myScript.js" enctype="multipart/form-data">
+					<form name="new-project" id ="new-work_form" method="post" action="../Backend/myScript.js" enctype="multipart/form-data">
 						<div class="add-field">
 							<span><i class="fa-regular fa-image"></i></span>
 							<div class="add-form_container">
 								<button id="add-pic">+ Ajout photo</button>
-								<input type="file" id="img" name="image" accept="image/*">
+								<input type="file" id="img" name="image" accept="image/*">	
 							</div>
 							<p>jpg, png : 4mo max</p>
+							<img id="preview" src="#" alt="nouvelle image" onerror="this.style.display='none'">
 						</div>
 						<label for="titre">Titre</label>
 						<input type="textarea" name="title" id="titre">

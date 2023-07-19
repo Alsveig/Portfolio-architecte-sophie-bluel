@@ -267,14 +267,6 @@ li a {
 	flex: 1
 }
 
-#prez-mod {
-	font-size: 15px;
-	padding-bottom: 15px;
-}
-
-#prez-mod:hover {
-	cursor: pointer;
-}
 
 #introduction h2 {
 	margin-bottom: 1em;
@@ -282,6 +274,13 @@ li a {
 
 #introduction p {
 	margin-bottom: 0.5em;
+	position: relative;
+	margin-left: 20px;
+}
+
+#figure_intro i {
+	position: absolute;
+	top: 608px;
 }
 
 #portfolio {
@@ -302,8 +301,13 @@ li a {
 	justify-content: space-between;
 }
 
-.portfolio_title p {
+#portfolio i {
 	margin-left: 30px;
+	margin-top: 8px;
+}
+
+.portfolio_title p {
+	margin-left: 5px;
 	padding-top: 6px;
 	font-size: 20px;
 }
@@ -459,14 +463,13 @@ footer nav ul {
 }
 
 .modale {
-	position: fixed;
 	position: absolute; 
-	top: -15px;
-	left: 0px;
+	max-width: 1140px;
+	margin-left: 250px;
+	bottom: -250px;
 }
 
 .modal-wrapper {
-	position: relative;
 	top: 660px;
 	left: 405px;
 	width: 630px;
@@ -524,6 +527,10 @@ footer nav ul {
 	border-radius: 3px;;
 }
 
+#listing i:hover {
+	cursor: pointer;
+}
+
 hr {
 	width: 482px;
 	color: #B3B3B3;
@@ -563,10 +570,10 @@ hr {
 
 /** MODALE 2 */
 .modale2 {
-	position: fixed;
 	position: absolute; 
-	top: -15px;
-	left: 0px;
+	max-width: 1140px;
+	margin-left: 250px;
+	bottom: -250px;
 }
 
 #close2 {
@@ -607,6 +614,7 @@ hr {
 }
 
 .add-field {
+	position: relative;
 	width: 420px;
 	height: 169px;
 	background-color: #E8F1F6;
@@ -656,6 +664,12 @@ hr {
 	margin-bottom: 10px;
 }
 
+#preview {
+	position: absolute;
+	height: 169px;
+	align-self: center;
+}
+
 .add-field p {
 	margin: auto;
 	margin-top: -5px;
@@ -693,12 +707,23 @@ hr {
 
 #valid {
 	margin-top: 45px;
-	background-color: #B3B3B3;
 	color: white;
 	width: 237px;
 	height: 36px;
 	border-radius: 60px;
 	border-style: none;
-	margin-left: 190px;
+	margin-left: 90px;
 	font-weight: 700;
+}
+
+#valid:hover {
+	cursor: pointer;
+}
+
+.valid-empty {
+	background-color: #751616;
+}
+
+.valid-ready {
+	background-color: #1D6154;
 }

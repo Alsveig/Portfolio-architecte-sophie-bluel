@@ -17,18 +17,17 @@ const getCat = async () => {
 // Crée modif intro 
 const intro = document.getElementById("introduction");
 const photo = document.getElementById("figure_intro");
+const prez = document.getElementById("prez");
+const beforePrez = document.getElementById("before-mod");
 
+const modifyPicIcon = photo.appendChild(document.createElement("i"));
+modifyPicIcon.classList.add("fa-regular", "fa-pen-to-square");
 const modifyPic = photo.appendChild(document.createElement("p"));
 modifyPic.innerHTML = "modifier";
 modifyPic.id = "pic-mod";
 
-const prez = document.getElementById("prez");
-const beforeMod = document.getElementById("before-mod");
 
-const modifyPrez = document.createElement("p");
-modifyPrez.innerHTML = "modifier";
-modifyPrez.id = "prez-mod";
-prez.insertBefore(modifyPrez, beforeMod);
+
 
 
 // Crée div titre & modifier + div boutons + div travaux
@@ -38,6 +37,8 @@ titleDiv.classList.add("portfolio_title");
 portfolio.appendChild(titleDiv);
 const title = titleDiv.appendChild(document.createElement("h2"));
 title.innerHTML = "Mes Projets";
+const modifyIcon = titleDiv.appendChild(document.createElement("i"));
+modifyIcon.classList.add("fa-regular", "fa-pen-to-square");
 const modify = titleDiv.appendChild(document.createElement("p"));
 modify.innerHTML = "modifier";
 modify.id = "open-modal_button";
@@ -56,7 +57,8 @@ const display = (works, categories) => {
         divForWorks.innerHTML = "";
         if (category == null || category == 0) {
             for (let i = 0; i < works.length; i++) {
-                let figure = document.createElement("figure")
+                let figure = document.createElement("figure");
+                figure.id = "display" + works[i].id;
                 let figcaption = document.createElement("figcaption");
                 figcaption.innerHTML = works[i].title;
                 let image = document.createElement("img");
@@ -168,11 +170,15 @@ close2.addEventListener('click', function () { closeModal2() });
 
 
 // Affiche travaux + créé bouton supp
+
+
 function listing(works) {
     const divListing = document.getElementById("listing");
 
     for (let i = 0; i < works.length; i++) {
         let figure = document.createElement("figure")
+        figure.id = "listing" + works[i].id;
+        
         let figcaption = document.createElement("figcaption");
         figcaption.innerHTML = "éditer";
         let image = document.createElement("img");
@@ -180,18 +186,18 @@ function listing(works) {
         image.alt = works[i].title;
         const trash = document.createElement("i");
         trash.classList.add("fa-regular", "fa-trash-can", "fa-2xs");
-        trash.id = works[i].id;
-        const trashId = trash.id;
         figure.appendChild(image);
         figure.appendChild(figcaption);
         image.insertAdjacentElement("beforebegin", trash);
         divListing.appendChild(figure);
 
-        trash.addEventListener('click', function () { deleteWork(trashId) });
+        trash.addEventListener('click', function () { deleteWork(works[i].id) });
     }
+
     //Supprimer un projet 
     function deleteWork(id) {
         const token = localStorage.getItem("token");
+        console.log(token);
         fetch(`http://localhost:5678/api/works/${id}`, {
             method: 'delete',
             headers: {
@@ -199,8 +205,13 @@ function listing(works) {
                 'Authorization': `Bearer ${token}`
             }
         })
+        const workToRemoveListing = document.getElementById("listing" + id);
+        workToRemoveListing.remove();
+        const workToRemoveDisplay = document.getElementById("display" + id);
+        workToRemoveDisplay.remove();
     }
 }
+
 
 //Créer options form modale 2 
 const catField = document.getElementById("category");
@@ -212,34 +223,78 @@ function createFormCatList(categories){
     for (let i = 0; i < categories.length; i++){
         const option = document.createElement("option");
         option.classList.add("options");
-        option.value = categories[i].name;
+        option.value = categories[i].id;
         option.innerHTML = categories[i].name;
         catField.appendChild(option);
     }
 }
 
+//Preview image formulaire 
+const imageUpload = document.getElementById("img");
+imageUpload.onchange = e => {
+    const file = imageUpload.files[0];
+    console.log(file);
+    if (file) {
+        const preview = document.getElementById("preview");
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = "block";
+        const previewHide = document.getElementById("add-pic");
+        previewHide.style.display = "none";
+    }
+}
+
+//Envoyer nvx travaux
 const workForm = document.getElementById("new-work_form");
 const sendWork = document.getElementById("valid");
 
-sendWork.onclick = async (e) => {
+const newProject = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
-    console.log(token);
-
+    const formulaire = new FormData(workForm);
     const response = await fetch("http://localhost:5678/api/works", {
         method: 'POST',
         headers: {
-            'Accept': 'application/json',
             'Authorization': `Bearer ${token}`
         },
-        body: new FormData(workForm),
+        body: formulaire,
     });
 
     const result = await response.json();
-    console.log(result.message);
+    localStorage.setItem("log", JSON.stringify(result));
+    console.log(formulaire.get("image"));
+
+
+    //Affichage dynamique des nouveaux projets
+    let figure = document.createElement("figure");
+    figure.id = "display" + result.id;
+    let figcaption = document.createElement("figcaption");
+    figcaption.innerHTML = "éditer";
+    let image = document.createElement("img");
+    image.src = result.imageUrl;
+    image.alt = result.title;
+    figure.appendChild(image);
+    figure.appendChild(figcaption);
+    document.getElementById("divForWorks").appendChild(figure);
+    const figureModale = figure.cloneNode(true);
+    const trash = document.createElement("i");
+    trash.classList.add("fa-regular", "fa-trash-can", "fa-2xs");
+    figureModale.querySelector("img").insertAdjacentElement("beforebegin", trash);
+    document.getElementById("listing").appendChild(figureModale);
 }
 
-console.log(localStorage.getItem("token"));
+// Changement couleur bouton valider
+function formIsFull() {
+    const titleField = document.getElementById("titre");
+    if (img.files.length == 0 || !titleField.value || !category.value) {
+        sendWork.classList.add("valid-empty");
+    } else {
+        sendWork.classList.add("valid-ready");
+    }
+}
+
+workForm.addEventListener('change', formIsFull);
+
+sendWork.addEventListener('click', newProject);
 
 const letsGo = async () => {
     const works = await getWorks();
@@ -248,6 +303,7 @@ const letsGo = async () => {
     display(works, categories);
     listing(works);
     createFormCatList(categories);
+    formIsFull();
 }
 letsGo();
 
