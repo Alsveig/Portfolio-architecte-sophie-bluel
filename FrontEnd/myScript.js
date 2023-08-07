@@ -27,9 +27,6 @@ modifyPic.innerHTML = "modifier";
 modifyPic.id = "pic-mod";
 
 
-
-
-
 // Crée div titre & modifier + div boutons + div travaux
 const portfolio = document.getElementById("portfolio");
 const titleDiv = document.createElement("div");
@@ -223,7 +220,7 @@ function createFormCatList(categories){
     for (let i = 0; i < categories.length; i++){
         const option = document.createElement("option");
         option.classList.add("options");
-        option.value = categories[i].id;
+        option.value = Number(categories[i].id);
         option.innerHTML = categories[i].name;
         catField.appendChild(option);
     }
@@ -250,7 +247,10 @@ const sendWork = document.getElementById("valid");
 const newProject = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
-    const formulaire = new FormData(workForm);
+    const formulaire = new FormData();
+    formulaire.append("title", workForm.title.value);
+    formulaire.append("category", workForm.category.value);
+    formulaire.append("image", workForm.image);
     const response = await fetch("http://localhost:5678/api/works", {
         method: 'POST',
         headers: {
@@ -258,8 +258,9 @@ const newProject = async (e) => {
         },
         body: formulaire,
     });
-
+    console.log(formulaire);
     const result = await response.json();
+    console.log(result);
     localStorage.setItem("log", JSON.stringify(result));
     console.log(formulaire.get("image"));
 
@@ -268,7 +269,7 @@ const newProject = async (e) => {
     let figure = document.createElement("figure");
     figure.id = "display" + result.id;
     let figcaption = document.createElement("figcaption");
-    figcaption.innerHTML = "éditer";
+    figcaption.innerHTML = result.title;
     let image = document.createElement("img");
     image.src = result.imageUrl;
     image.alt = result.title;
