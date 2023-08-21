@@ -250,7 +250,7 @@ const newProject = async (e) => {
     const formulaire = new FormData();
     formulaire.append("title", workForm.title.value);
     formulaire.append("category", workForm.category.value);
-    formulaire.append("image", workForm.image);
+    formulaire.append("image", imageUpload.files[0]);
     const response = await fetch("http://localhost:5678/api/works", {
         method: 'POST',
         headers: {
