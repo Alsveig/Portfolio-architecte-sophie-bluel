@@ -26,25 +26,35 @@ async function LogIn(event) {
         "password": password,
     }; // créé objet user 
     console.log(JSON.stringify(user));
-
-    const fetchResult = await fetch("http://localhost:5678/api/users/login", {
+    try {
+        const fetchResult = await fetch("http://localhost:5678/api/users/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(user),
-    });
-    const jsonResult = await fetchResult.json();
-
-    if (jsonResult.userId) {
-        localStorage.setItem("token", jsonResult.token);
-        redirect();
-    } else {
-        error();
+        });
+        const jsonResult = await fetchResult.json();
+        if (jsonResult.userId) {
+            localStorage.setItem("token", jsonResult.token);
+            redirect();
+        } else if (!jsonResult.userId) {
+            error();
+        } else {
+            alert(`HTTP¨error! status: ${response.status}`);
+        }
+    } catch (error) {
+        console.error(error);
     }
+    
+    
+
+
 }
 
-//Bouton fonctionnel
+
+
+//Bouton connexion
 const authButton = document.getElementById("auth");
 console.log(authButton.value);
 authButton.addEventListener('click', LogIn);
